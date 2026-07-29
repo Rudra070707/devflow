@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import healthRoutes from "./routes/health.routes";
+import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/health", healthRoutes);
+app.use("/api/auth", authRoutes);
 
 export default app;
