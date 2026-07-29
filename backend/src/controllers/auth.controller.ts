@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { loginSchema, registerSchema } from "../schemas/auth.schema";
 import { loginUser, registerUser } from "../services/auth.service";
+import { AuthRequest } from "../middleware/auth.middleware";
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -52,4 +53,11 @@ export const login = async (req: Request, res: Response) => {
       message: "Internal Server Error",
     });
   }
+};
+
+export const me = async (req: AuthRequest, res: Response) => {
+  return res.status(200).json({
+    success: true,
+    data: req.user,
+  });
 };
