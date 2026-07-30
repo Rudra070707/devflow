@@ -21,3 +21,35 @@ export const getProjectsByOwner = async (
     },
   });
 };
+
+export const getProjectById = async (
+  id: string
+): Promise<Project | null> => {
+  return prisma.project.findUnique({
+    where: {
+      id,
+    },
+  });
+};
+
+export const updateProject = async (
+  id: string,
+  data: Prisma.ProjectUpdateInput
+): Promise<Project> => {
+  return prisma.project.update({
+    where: {
+      id,
+    },
+    data,
+  });
+};
+
+export const deleteProject = async (
+  id: string
+): Promise<Project> => {
+  return prisma.project.delete({
+    where: {
+      id,
+    },
+  });
+};
