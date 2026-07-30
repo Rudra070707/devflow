@@ -5,12 +5,13 @@ import {
 } from "../repositories/auth.repository";
 import { comparePassword, hashPassword } from "../utils/password";
 import { generateToken } from "../utils/jwt";
+import { AppError } from "../utils/AppError";
 
 export const registerUser = async (data: RegisterInput) => {
   const existingUser = await findUserByEmail(data.email);
 
   if (existingUser) {
-    throw new Error("Email already exists");
+    throw new AppError("Email already exists", 409);
   }
 
   const hashedPassword = await hashPassword(data.password);
@@ -33,7 +34,7 @@ export const loginUser = async (data: LoginInput) => {
   const user = await findUserByEmail(data.email);
 
   if (!user) {
-    throw new Error("Invalid email or password");
+    throw new AppError("Invalid email or password", 401);
   }
 
   const isPasswordValid = await comparePassword(
@@ -42,7 +43,7 @@ export const loginUser = async (data: LoginInput) => {
   );
 
   if (!isPasswordValid) {
-    throw new Error("Invalid email or password");
+    throw new AppError("Invalid email or password", 401);
   }
 
   const token = generateToken(user.id);
