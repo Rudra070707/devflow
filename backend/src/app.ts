@@ -5,6 +5,7 @@ import morgan from "morgan";
 
 import healthRoutes from "./routes/health.routes";
 import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
 import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
@@ -23,6 +24,7 @@ app.get("/", (_req, res) => {
 
 app.use("/health", healthRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 // Global Error Handler (always last)
 app.use(errorHandler);
